@@ -37,6 +37,7 @@ gem 'octokit'
 
 group :development do
   gem 'haml-rails'
+  gem 'rb-readline'
 end
 
 group :test do
