@@ -13,6 +13,17 @@ module Github
       super(options)
     end
 
+    # Fetches commit data
+    #
+    # @overload
+    # @param sha [String] the sha of the commit
+    # @param options [Hash]
+    # @return [Hashie::Mash] a hash representing the commit
+    # @see http://developer.github.com/v3/repos/commits/
+    def commit(sha, options = {})
+      super(@repo, sha, options)
+    end
+
     # Compare two commits
     #
     # @overload
