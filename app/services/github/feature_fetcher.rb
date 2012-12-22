@@ -6,10 +6,10 @@ module Github
     # @overload
     # @return [Hashie::Mash] A hash representing the comparison with base branch
     def fetch
-      last_base_commit    = client.last_commit_sha
-      last_feature_commit = client.last_commit_sha(working_branch)
+      last_base_commit    = last_commit_sha
+      last_feature_commit = last_commit_sha(working_branch)
 
-      client.compare(last_base_commit, last_feature_commit)
+      compare(last_base_commit, last_feature_commit)
     end
   end
 end
