@@ -47,7 +47,7 @@
   font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
   font-weight: normal !important;
   font-style: normal !important;
-  font-size: 1em !important;
+  font-size: 0.97em !important;
   min-height: inherit !important;
   min-height: auto !important;
 }
@@ -57,7 +57,7 @@
   margin: 1em 0 1em 0 !important;
   position: relative !important;
   overflow: auto !important;
-  font-size: 1em !important;
+  font-size: 0.97em !important;
 }
 .syntaxhighlighter.source {
   overflow: hidden !important;
@@ -80,6 +80,7 @@
 }
 .syntaxhighlighter table td.code {
   width: 100% !important;
+
 }
 .syntaxhighlighter table td.code .container {
   position: relative !important;
@@ -101,8 +102,15 @@
   text-align: right !important;
   padding: 0 0.5em 0 1em !important;
 }
+.syntaxhighlighter table td.gutter .line:hover {
+  background-color: #7ae8f7 !important;
+  cursor: pointer;
+}
 .syntaxhighlighter table td.code .line {
   padding: 0 1em !important;
+}
+.syntaxhighlighter table td.code .line:hover {
+    background-color: #7ae8f7 !important;
 }
 .syntaxhighlighter.nogutter td.code .container textarea, .syntaxhighlighter.nogutter td.code .line {
   padding-left: 0em !important;
@@ -139,6 +147,7 @@
   height: 11px !important;
   font-size: 10px !important;
   z-index: 10 !important;
+  display: none !important;
 }
 .syntaxhighlighter .toolbar span.title {
   display: inline !important;
@@ -235,7 +244,10 @@
   background-color: white !important;
 }
 .syntaxhighlighter .line.highlighted.alt1, .syntaxhighlighter .line.highlighted.alt2 {
-  background-color: #e0e0e0 !important;
+  background-color: #DFD !important;
+}
+.syntaxhighlighter .line.removed_line.alt1, .syntaxhighlighter .line.removed_line.alt2 {
+    background-color: #FDD !important;
 }
 .syntaxhighlighter .line.highlighted.number {
   color: black !important;
@@ -244,14 +256,17 @@
   color: black !important;
 }
 .syntaxhighlighter .gutter {
-  color: #afafaf !important;
+  color: #AAA !important;
 }
 .syntaxhighlighter .gutter .line {
-  border-right: 3px solid #6ce26c !important;
+  border-right: 3px solid #d1cecf !important;
+  background-color: #ECECEC !important;
 }
-.syntaxhighlighter .gutter .line.highlighted {
-  background-color: #6ce26c !important;
-  color: white !important;
+.syntaxhighlighter .gutter .line:first-child {
+  border-top-left-radius: 5px !important;
+}
+.syntaxhighlighter .gutter .line:last-child {
+    border-bottom-left-radius: 5px !important;
 }
 .syntaxhighlighter.printing .line .content {
   border: none !important;

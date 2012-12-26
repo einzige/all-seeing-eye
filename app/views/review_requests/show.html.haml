@@ -4,5 +4,16 @@
 - content_for :js do
   = javascript_include_tag 'review_requests/show'
 
-%pre{class: "brush: eye;"}
-  = @request.files.first['patch']
+-#%pre{class: "brush: eye;"}
+  = @request.files.first.diff
+
+
+%table
+  - @request.files.each do |file|
+    %h1{style: 'float: left'}=link_to file['filename'], file['raw_url']
+    %small{style: 'float: right'}= file['sha']
+    %div{style: 'clear: both'}
+    %p= file.stats
+
+    %pre{class: "brush: eye; highlight: #{file.future_map} removed: #{file.past_map}"}
+      = file.diff.gsub(/^(\+|-)/, '')

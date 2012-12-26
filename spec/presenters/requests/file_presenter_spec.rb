@@ -2,11 +2,11 @@ require 'spec_helper'
 
 
 describe Requests::FilePresenter do
-  let(:diff) { "zero\n-one\n+two\n-three\nfour" }
-  subject { described_class.new(diff) }
+  let(:file) { {'patch' => "zero\n-one\n+two\n-three\nfour"} }
+  subject { described_class.new(file) }
 
   it 'assigns diff' do
-    subject.diff.should == diff
+    subject.diff.should == file['patch']
   end
 
   describe "#diff_future_lines" do
@@ -23,19 +23,25 @@ describe Requests::FilePresenter do
 
   describe "#future" do
     it 'returns future file state' do
-      subject.future.should == [[0, 'zero'], [1, 'two'], [1, nil], [2, 'four']]
+      subject.future.should == [[0, 'zero'], [1, 'two'], [2, nil], [2, 'four']]
     end
 
     context "multiple cluster diff" do
-      let(:diff) { "-1\n-2\n+3\n+4" }
+      let(:file) { {'patch' => "-1\n-2\n+3\n+4"} }
 
       its(:future) { should == [[0,'3'], [1,'4']] }
     end
 
     context "multiple revert cluster diff" do
-      let(:diff) { "+3\n+4\n-1\n-2" }
+      let(:file) { {'patch' => "+3\n+4\n-1\n-2"} }
 
       its(:future) { should == [[0,'3'], [1,'4']] }
+    end
+
+    context "empty lines" do
+      let(:file) { {'patch' => "-3\n-4\n1\n2"} }
+
+      its(:future) { should == [[0,nil], [0,nil], [0,'1'], [1,'2']] }
     end
   end
 
@@ -53,19 +59,38 @@ describe Requests::FilePresenter do
 
   describe "#past" do
     it 'returns past file state' do
+      "zero\n-one\n+two\n-three\nfour"
+      [[0, "zero"], [1, "one"], [2, nil],   [2, "three"], [3, "four"]]
+      [[0, "zero"], [1, nil],   [2, 'two'], [3, nil],     [3, "four"]]
+
+      [[0, "zero"], [1, "one"], [2, "two"], [3, nil],     [4, nil]]
+      [[0, "zero"], [1, nil],   [2, nil],   [3, "three"], [4, "four"]]
+
       subject.past.should == [[0, 'zero'], [1, 'one'], [2, 'three'], [3, 'four']]
     end
 
     context "multiple cluster diff" do
-      let(:diff) { "-1\n-2\n+3\n+4" }
+      let(:file) { {'patch' => "-1\n-2\n+3\n+4"} }
 
       its(:past) { should == [[0,'1'], [1,'2']] }
     end
 
     context "multiple revert cluster diff" do
-      let(:diff) { "+3\n+4\n-1\n-2" }
+      let(:file) { {'patch' => "+3\n+4\n-1\n-2"} }
 
       its(:past) { should == [[0,'1'], [1,'2']] }
+    end
+
+    context "empty lines" do
+      let(:file) { {'patch' => "+3\n+4\n1\n2"} }
+
+      its(:past) { should == [[0,nil], [0,nil], [0,'1'], [1,'2']] }
+    end
+
+    context 'tripple plus' do
+      let(:file) { {'patch' => "0\n+1\n+2\n+\n3\n-4"} }
+
+      its(:past) { should == [[0,'0'], [1,nil], [1,nil], [1,nil], [1,'3'], [2,'4']] }
     end
   end
 

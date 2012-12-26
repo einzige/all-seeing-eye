@@ -5,6 +5,6 @@ class ReviewRequestsController < ApplicationController
   end
 
   def show
-    @request = ReviewRequest.find(params[:id])
+    @request = RequestPresenter.new(ReviewRequest.find(params[:id]))
   end
 end
