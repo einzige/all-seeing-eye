@@ -3,6 +3,79 @@ module Requests
 
     attr_reader :diff, :file
 
+    def split_diff
+      @left = []
+      @right = []
+
+      i = 0
+      l = []
+      r = []
+
+      merge = Proc.new do
+        max = [l.count, r.count].max - 1
+
+        @left.concat(l.fill(nil, l.count..max))
+        @right.concat(r.fill(nil, r.count..max))
+
+        l = []
+        r = []
+      end
+
+      while i <= lines.size
+
+        if i == lines.size
+          merge.call
+          break
+        end
+
+        line = lines[i]
+
+        unless line.starts_with?('+') && l.any?
+          merge.call
+        end
+
+        if line.starts_with?('-')
+          while i < lines.size && lines[i].starts_with?('-')
+            l << lines[i]
+            i+=1
+          end
+        elsif line.starts_with?('+')
+          while i < lines.size && lines[i].starts_with?('+')
+            r << lines[i]
+            i+=1
+          end
+        else
+          l << line
+          r << line
+          i+=1
+        end
+      end
+
+      true
+    end
+
+    def past_map
+      @past_map ||= begin
+        i = 0
+        past.map do |l|
+          r = [i, l]
+          i+=1 if l
+          r
+        end
+      end
+    end
+
+    def future_map
+      @future_map ||= begin
+        i = 0
+        future.map do |l|
+          r = [i, l]
+          i+=1 if l
+          r
+        end
+      end
+    end
+
     def [] key
       file[key.to_s]
     end
@@ -45,30 +118,7 @@ module Requests
     # @return [Array<Array>]
     # @example [[0, 'zero'], [1, 'one'], [2, 'three'], [3, 'four']]
     def future
-      @future ||= begin
-        res              = []
-        diff_line_number = 0
-        line_number      = 0
-
-        while diff_line_number < diff_size do
-          if new_lines.include?(line_number)
-            res.insert(line_number, nil)
-            res[line_number] = [line_number, future_lines[line_number]]
-            line_number+=1
-          elsif changed_line_numbers.include?(line_number)
-            res << [line_number, future_lines[line_number]]
-            line_number+=1
-          elsif removed_lines.include?(diff_line_number)
-            res << [line_number, nil]
-          else
-            res << [line_number, future_lines[line_number]]
-            line_number+=1
-          end
-
-          diff_line_number+=1
-        end
-        res
-      end
+      @future ||= split_diff and @right
     end
 
     # Returns lines without removed
@@ -95,17 +145,6 @@ module Requests
       @new_lines ||= future_line_numbers - past_line_numbers
     end
 
-    def past_map
-      @past_map ||= lines.each_with_index.map do |line, i|
-        i+1 if line.starts_with?('-')
-      end.compact
-    end
-    #
-    def future_map
-      @future_map ||= lines.each_with_index.map do |line, i|
-        i+1 if line.starts_with?('+')
-      end.compact
-    end
     #
     #def static_map
     #  @static_map ||= lines.size.times.map.to_a - future_map - past_map
@@ -119,44 +158,7 @@ module Requests
     # @return [Array<Array>]
     # @example [[0, 'zero'], [1, 'one'], [2, 'three'], [3, 'four']]
     def past
-      @past ||= begin
-        #is = 0
-        #clean_lines.each_with_index.map do |_, i|
-        #  if past_map.include?(i) || static_map.include?(i)
-        #    if res[i-1].last.nil? && i-1 > 0 && !static_map.include?(i)
-        #
-        #    else
-        #      res = [is, clean_lines[i]]
-        #      is+=1
-        #      res
-        #    end
-        #  else
-        #    [is, nil]# if !future_map.include?(i)
-        #  end
-        #end.compact
-        res              = []
-        diff_line_number = 0
-        line_number      = 0
-
-        while diff_line_number < diff_size do
-          if new_lines.include?(diff_line_number)
-            res << [line_number, nil]
-          elsif changed_line_numbers.include?(line_number)
-            res << [line_number, past_lines[line_number]]
-            line_number+=1
-          elsif removed_lines.include?(diff_line_number)
-            res.insert(line_number, nil)
-            res[line_number] = [line_number, past_lines[line_number]]
-            line_number+=1
-          else
-            res << [line_number, past_lines[line_number]]
-            line_number+=1
-          end
-
-          diff_line_number+=1
-        end
-        res
-      end
+      @past ||= split_diff and @left
     end
 
     # Returns a list of changed and removed line numbers
