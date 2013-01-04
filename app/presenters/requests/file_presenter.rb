@@ -14,6 +14,12 @@ module Requests
       @patch = file['patch']
     end
 
+    def diffs
+      @diffs ||= patch.split("\n@@").map do |diff|
+        Requests::DiffPresenter.new(diff)
+      end
+    end
+
     # Returns an array of line and line number for the future diff content
     # @return [Array<Array>]
     # @example [[0, 'zero'], [1, 'one'], [2, 'three'], [3, 'four']]
@@ -42,7 +48,7 @@ module Requests
     # Returns a list of lines
     # @return [Array<String>]
     def lines
-      @lines ||= diff.split("\n")
+      @lines ||= patch.split("\n")
     end
 
     # Returns an array of line and line numbers for the past content

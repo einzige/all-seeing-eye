@@ -22,23 +22,24 @@
       - file.future_map.each do |line_number, line|
         = line
 
-    %table.file{width: "100%", cellspacing: 0, cellpadding: 0}
-      - file.future.size.times do |l|
-        %tr{class: "l #{file.line_class(l)}"}
-          %td.past
-            - if file.past[l]
-              =raw file.past[l].gsub(/\s/, '&nbsp;')
-            - else
-              .empty
-          %td.gutter.past_gutter
-            = file.past_map[l].first
-          %td.gutter
-            = file.future_map[l].first
-          %td.future
-            - if file.future[l]
-              =raw file.future[l].gsub(/\s/, '&nbsp;')
-            - else
-              .empty
+    - file.diffs.each do |diff|
+      %table.file{width: "100%", cellspacing: 0, cellpadding: 0}
+        - diff.future.size.times do |l|
+          %tr{class: "l #{diff.line_class(l)}"}
+            %td.past
+              - if diff.past[l]
+                =raw diff.past[l].gsub(/\s/, '&nbsp;')
+              - else
+                .empty
+            %td.gutter.past_gutter
+              = diff.past_map[l].first
+            %td.gutter
+              = diff.future_map[l].first
+            %td.future
+              - if diff.future[l]
+                =raw diff.future[l].gsub(/\s/, '&nbsp;')
+              - else
+                .empty
 
     -#%pre{class: "brush: eye; highlight: #{file.future_map} removed: #{file.past_map}"}
       = file.diff.gsub(/^(\+|-)/, '')

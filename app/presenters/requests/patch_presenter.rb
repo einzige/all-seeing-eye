@@ -1,9 +1,16 @@
 module Requests
-  class DiffPresenter
-    attr_reader :diff
+  class PatchPresenter
+    attr_reader :patch, :file
 
-    def initialize diff
-      @diff = diff
+    # @param [Hash] file Github representation of file
+    def initialize(patch)
+      @patch = patch
+    end
+
+    def diffs
+      @diffs ||= patch.split("\n@@").map do |diff|
+        Requests::DiffPresenter.new(diff)
+      end
     end
 
     # Returns an array of line and line number for the future diff content
@@ -27,10 +34,14 @@ module Requests
       end
     end
 
+    def fm
+
+    end
+
     # Returns a list of lines
     # @return [Array<String>]
     def lines
-      @lines ||= diff.split("\n")
+      @lines ||= patch.split("\n")
     end
 
     # Returns an array of line and line numbers for the past content
