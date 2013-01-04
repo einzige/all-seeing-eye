@@ -75,6 +75,9 @@ describe Requests::FilePresenter do
 
       its(:past) { should == ['zero', '-one', '-three', 'four'] }
       its(:future) { should == ['zero', '+two', nil, 'four'] }
+      its(:added) { should == [] }
+      its(:removed) { should == [2] }
+      its(:changed) { should == [1] }
     end
 
     context "multiple cluster diff" do
@@ -82,6 +85,9 @@ describe Requests::FilePresenter do
 
       its(:past) { should == ['-1', '-2'] }
       its(:future) { should == ['+3', '+4'] }
+      its(:added) { should == [] }
+      its(:removed) { should == [] }
+      its(:changed) { should == [0,1] }
     end
 
     context "multiple revert cluster diff" do
@@ -89,6 +95,9 @@ describe Requests::FilePresenter do
 
       its(:past) { should == [nil, nil, '-1', '-2'] }
       its(:future) { should == ['+3', '+4', nil, nil] }
+      its(:added) { should == [0, 1] }
+      its(:removed) { should == [2, 3] }
+      its(:changed) { should == [] }
     end
 
     context "empty lines" do
@@ -96,6 +105,9 @@ describe Requests::FilePresenter do
 
       its(:past) { should == [nil, nil, '1', '2'] }
       its(:future) { should == ['+3', '+4', '1', '2'] }
+      its(:added) { should == [0, 1] }
+      its(:removed) { should == [] }
+      its(:changed) { should == [] }
     end
 
     context 'tripple plus' do
@@ -103,6 +115,9 @@ describe Requests::FilePresenter do
 
       its(:past) { should == ['0', nil, nil, nil, '3', '-4'] }
       its(:future) { should == ['0', '+1', '+2', '+', '3', nil] }
+      its(:added) { should == [1, 2, 3] }
+      its(:removed) { should == [5] }
+      its(:changed) { should == [] }
     end
   end
 end
