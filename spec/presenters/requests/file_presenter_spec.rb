@@ -9,18 +9,6 @@ describe Requests::FilePresenter do
     subject.diff.should == file['patch']
   end
 
-  describe "#diff_future_lines" do
-    it 'returns future lines' do
-      subject.diff_future_lines.should == ["zero", "+two", "four"]
-    end
-  end
-
-  describe "#diff_past_lines" do
-    it 'returns past lines' do
-      subject.diff_past_lines.should == ["zero", "-one", "-three", "four"]
-    end
-  end
-
   describe "#future_map" do
     it 'returns future file state' do
       subject.future_map.should == [[0, 'zero'], [1, '+two'], [2, nil], [2, 'four']]
@@ -42,12 +30,6 @@ describe Requests::FilePresenter do
       let(:file) { {'patch' => "-3\n-4\n1\n2"} }
 
       its(:future_map) { should == [[0,nil], [0,nil], [0,'1'], [1,'2']] }
-    end
-  end
-
-  describe "#future_line_numbers" do
-    it 'returns line numbers' do
-      subject.future_line_numbers.should == [1]
     end
   end
 
@@ -84,12 +66,6 @@ describe Requests::FilePresenter do
       let(:file) { {'patch' => "0\n+1\n+2\n+\n3\n-4"} }
 
       its(:past_map) { should == [[0,'0'], [1,nil], [1,nil], [1,nil], [1,'3'], [2,'-4']] }
-    end
-  end
-
-  describe "#past_line_numbers" do
-    it 'returns line numbers' do
-      subject.past_line_numbers.should == [1, 2]
     end
   end
 
