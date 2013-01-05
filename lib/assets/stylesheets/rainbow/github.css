@@ -5,36 +5,20 @@
  * @version 1.0.4
  */
 pre {
-    border: 1px solid #ccc;
     word-wrap: break-word;
-    padding: 6px 10px;
-    line-height: 19px;
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 code {
-    border: 1px solid #eaeaea;
-    margin: 0px 2px;
-    padding: 0px 5px;
     font-size: 12px;
 }
 
 pre code {
-    border: 0px;
-    padding: 0px;
-    margin: 0px;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
 }
 
 pre, code {
-    font-family: Consolas, 'Liberation Mono', Courier, monospace;
     color: #333;
-    background: #f8f8f8;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
 }
 
 pre, pre code {
@@ -85,4 +69,21 @@ pre .string, pre .support.value  {
 
 pre .regexp {
     color: #009926;
+}
+
+pre .symbol {
+    color: #6d4fff;
+    font-weight: bold;
+}
+
+pre .keyword.special-method {
+    color: red;
+}
+
+pre .constant:not(.symbol) {
+    color: #359fff;
+}
+
+pre .removed_line {
+    color: #928f95;
 }

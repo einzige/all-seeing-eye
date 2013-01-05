@@ -1,16 +1,16 @@
 
 /*
  *= require_self
- *= require shCore
- *= require sh/shBrushRuby
- *= require sh/shBrushEye
- *= require sh/shBrushJScript
- *= require sh/shEye
+ *= require rainbow
+ *= require rainbow/ruby
+ *= require rainbow/javascript
+ *= require rainbow/coffeescript
+ *= require rainbow/css
+ *= require rainbow/html
+ *= require rainbow/generic
  */
 
 
 
 $(document).ready(function() {
-    // SyntaxHighlighter.defaults.highlight = [1,2,6];
-    SyntaxHighlighter.all();
 });

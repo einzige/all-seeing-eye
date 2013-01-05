@@ -4,42 +4,47 @@
 - content_for :js do
   = javascript_include_tag 'review_requests/show'
 
--#%pre{class: "brush: eye;"}
-  = @request.files.first.diff
-
+.title All seeing eye
 
 %table
   - @request.files.each do |file|
-    %h1{style: 'float: left'}=link_to file['filename'], file['raw_url']
-    %small{style: 'float: right'}= file['sha']
-    %div{style: 'clear: both'}
-    %p= file.stats
-
-    -#%pre{class: "brush: eye;"}
-      - file.past_map.each do |line_number, line|
-        = line
-    -#%pre{class: "brush: eye;"}
-      - file.future_map.each do |line_number, line|
-        = line
+    %h1.left
+      = link_to file['filename'], file['raw_url']
+    %p.left.stats
+      = file.stats
+    %small.right
+      = file['sha']
+    .clear
 
     - file.diffs.each do |diff|
       %table.file{width: "100%", cellspacing: 0, cellpadding: 0}
-        - diff.future.size.times do |l|
+
+        - diff.each_line do |l|
+          %tr{l.opts}
+            - if l.heap?
+              %td{colspan: 4}= l.past
+            - else
+              %td.past{width: "50%"}
+                %pre
+                  %code{data: {language: 'ruby'}}= l.past
+              %th.gutter.past_gutter= l.past_number
+              %th.gutter= l.future_number
+              %td.future
+                %pre
+                  %code{data: {language: 'ruby'}}= l.future
+        -# diff.future.size.times do |l|
           %tr{class: "l #{diff.line_class(l)}"}
-            %td.past
+            %td.past{width: "50%"}
               - if diff.past[l]
                 =raw diff.past[l].gsub(/\s/, '&nbsp;')
               - else
                 .empty
-            %td.gutter.past_gutter
+            %th.gutter.past_gutter
               = diff.past_map[l].first
-            %td.gutter
+            %th.gutter
               = diff.future_map[l].first
             %td.future
               - if diff.future[l]
                 =raw diff.future[l].gsub(/\s/, '&nbsp;')
               - else
                 .empty
-
-    -#%pre{class: "brush: eye; highlight: #{file.future_map} removed: #{file.past_map}"}
-      = file.diff.gsub(/^(\+|-)/, '')

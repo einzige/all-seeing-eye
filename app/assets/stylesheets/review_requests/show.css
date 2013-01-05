@@ -1,6 +1,6 @@
 /*
  *= require_self
- *= require sh/shCoreDefault
+ *= require rainbow/github
  */
 
 * {
@@ -12,47 +12,107 @@ body {
     font-family: monospace;
 
     background-color: #fff;
-    background-image:
-        -webkit-linear-gradient(#eee .1em, transparent .1em);
     background-size: 100% 1.2em;
+}
+
+small {
+    color: gray;
+    font-size: 9px;
+}
+
+.left {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.right {
+    float:right;
 }
 
 .heap {
     font-weight: bold;
-    color: white;
-    border-radius: 10px;
-    height: 40px;
-    background:
-        -webkit-radial-gradient(black 15%, transparent 16%) 0 0,
-        -webkit-radial-gradient(black 15%, transparent 16%) 8px 8px,
-        -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
-        -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
-    background-color:#282828;
-    background-size:16px 16px;
+    color: white !important;
+    height: 30px;
+    background: #2b2c38; /* Old browsers */
+    background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #45484d 0%,#000000 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #45484d 0%,#000000 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #45484d 0%,#000000 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+    text-align: center;
 }
 
 .heap td:first-child {
-    border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
 }
 
 .heap td:last-child {
-    border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
+}
+
+.title {
+    text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000; color: #9c8468; opacity: 0.3; font: 80px 'Museo700';
+    width: 100%;
+    text-align: center;
+}
+
+h1 a {
+    color: #d7ceb2;
+    text-shadow: 1px 1px 0px #2c2e38, 2px 2px 0px #5c5f72;
+    font: 20px;
+    text-decoration: none;
+}
+
+h1 {
+    padding: 0px;
+    margin: 4px;
+    margin-top: 20px;
+}
+
+.stats {
+    padding: 0px;
+    margin: 0px;
+    color: gray;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid gray;
 }
 
 .gutter {
     color: gray;
     background-color: rgba(0, 0, 0, 0.1);
     padding: 0 5px 0 5px;
+    cursor: pointer;
 }
 
+.file {
+    margin-top: 20px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    padding: 1px;
+    color: #141414;
+}
 
 .file td {
     padding: 0 5px 0 5px;
 }
 
-.file tr:hover {
+.file th {
+    font-weight: normal;
+}
+
+.file th:hover {
+    cursor: pointer;
+}
+
+.file tr:not(.heap):hover {
     background-color: rgba(100, 220, 255, 1);
 }
 
@@ -62,15 +122,15 @@ body {
 
 
 .new {
-    background-color: rgba(0, 200, 10, 0.4);
+    background-color: rgba(0, 200, 10, 0.3);
 }
 
 .removed {
-    background-color: rgba(255, 0, 0, 0.4);
+    background-color: rgba(255, 0, 0, 0.3);
 }
 
 .changed {
-    background-color: rgba(255, 255, 0, 0.5);
+    background-color: rgba(255, 255, 0, 0.4);
 }
 
 .new_line {

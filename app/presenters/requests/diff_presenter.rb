@@ -73,17 +73,25 @@ module Requests
       "#{self[:status]}: #{self[:additions]} additions, #{self[:deletions]} deletions, #{self[:changes]} changes"
     end
 
-    def line_class(l)
-      if changed.include?(l)
-        'changed'
-      elsif added.include?(l)
-        'new'
-      elsif removed.include?(l)
-        'removed'
-      elsif future[l].starts_with?('@@')
-        'heap'
+    def collection
+      @collection ||= future.size.times.map do |l|
+        Requests::LinePresenter.new(self, l)
       end
     end
+
+    def offset
+      begin
+      collection.first.source.match(/@ -(\d+),/)[1].to_i
+      rescue
+        raise collection.first.past.inspect
+      end
+    end
+
+    def each_line(&block)
+      collection.each(&block)
+    end
+
+
 
     private
 

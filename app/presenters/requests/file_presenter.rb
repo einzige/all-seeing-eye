@@ -15,7 +15,7 @@ module Requests
     end
 
     def diffs
-      @diffs ||= patch.split("\n@@").map do |diff|
+      @diffs ||= patch.split("\n@").map do |diff|
         Requests::DiffPresenter.new(diff)
       end
     end
@@ -39,10 +39,6 @@ module Requests
           r
         end
       end
-    end
-
-    def fm
-
     end
 
     # Returns a list of lines
