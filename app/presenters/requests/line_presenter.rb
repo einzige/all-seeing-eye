@@ -1,6 +1,10 @@
 module Requests
   class LinePresenter < Struct.new(:diff, :l)
 
+    def first?
+      l == 0
+    end
+
     def heap?
       klass == :heap
     end
@@ -38,7 +42,7 @@ module Requests
     end
 
     def opts
-      {class: klass}
+      {class: klass, id: "p#{past_number}f#{future_number}"}
     end
 
     def klass

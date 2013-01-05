@@ -9,5 +9,6 @@
 
     = csrf_meta_tags
   %body.stripes.angled
-    = yield
-    = yield :js
+    .wrapper
+      = yield
+      = yield :js
