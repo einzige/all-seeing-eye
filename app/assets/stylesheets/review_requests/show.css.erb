@@ -1,0 +1,235 @@
+/*
+ *= require_self
+ *= require rainbow/github
+ */
+
+* {
+    font-family: monospace;
+}
+
+.wrapper {
+    font-family: monospace;
+
+    background-image: url(<%= asset_path 'eye.png' %>);
+    background-repeat: no-repeat;
+    background-position: 0px -70px;
+    background-attachment:fixed;
+    margin: 0;
+    padding: 0;
+}
+
+
+small {
+    color: gray;
+    font-size: 9px;
+}
+
+.left {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.right {
+    float:right;
+}
+
+.heap {
+    font-weight: bold;
+    color: white !important;
+    height: 50px;
+    margin-top: 10px;
+
+    background: #f6f8f9; /* Old browsers */
+    background: -moz-linear-gradient(top, #f6f8f9 0%, #e5ebee 50%, #d7dee3 51%, #f5f7f9 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f8f9), color-stop(50%,#e5ebee), color-stop(51%,#d7dee3), color-stop(100%,#f5f7f9)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-9 */
+
+    text-align: center;
+}
+
+.file .header {
+    color: black;
+    height: 30px;
+    background: #f9c667; /* Old browsers */
+    background: -moz-linear-gradient(top, #f9c667 0%, #f79621 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9c667), color-stop(100%,#f79621)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f9c667 0%,#f79621 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f9c667 0%,#f79621 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f9c667 0%,#f79621 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f9c667 0%,#f79621 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9c667', endColorstr='#f79621',GradientType=0 ); /* IE6-9 */
+}
+
+.file .header a {
+    color: black;
+    font-family: 'Federo', sans-serif;
+}
+
+.green {
+    color: #006f00;
+    font-weight: bold;
+}
+
+.upselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+}
+
+.yellow {
+    color: yellow;
+    font-weight: bold;
+
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+
+}
+
+.file .header:first-child {
+    border-top-left-radius: 4px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.file .header:last-child {
+    border-top-right-radius: 4px;
+    text-align: center;
+}
+
+.file .header small {
+    position: relative;
+    right: 5px;
+    top: 5px;
+}
+
+.heap td:first-child {
+    border-top-left-radius: 4px;
+    border: 1px solid white;
+}
+
+.heap td:last-child {
+    border-top-right-radius: 4px;
+    border: 1px solid white;
+}
+
+.title {
+    text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000; color: #9c8468; opacity: 0.3; font: 80px 'Museo700';
+    width: 100%;
+    text-align: center;
+}
+
+th.eye {
+    background: #d6f9ff; /* Old browsers */
+    background: -moz-linear-gradient(left, #d6f9ff 0%, #9ee8fa 49%, #dbf4f9 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#d6f9ff), color-stop(49%,#9ee8fa), color-stop(100%,#dbf4f9)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #d6f9ff 0%,#9ee8fa 49%,#dbf4f9 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #d6f9ff 0%,#9ee8fa 49%,#dbf4f9 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #d6f9ff 0%,#9ee8fa 49%,#dbf4f9 100%); /* IE10+ */
+    background: linear-gradient(to right, #d6f9ff 0%,#9ee8fa 49%,#dbf4f9 100%); /* W3C */
+}
+
+tr.commented th.eye {
+    background: #d6f9ff; /* Old browsers */
+    background: -moz-linear-gradient(left, #d6f9ff 0%, #00ccf9 49%, #dbf4f9 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#d6f9ff), color-stop(49%,#00ccf9), color-stop(100%,#dbf4f9)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #d6f9ff 0%,#00ccf9 49%,#dbf4f9 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #d6f9ff 0%,#00ccf9 49%,#dbf4f9 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #d6f9ff 0%,#00ccf9 49%,#dbf4f9 100%); /* IE10+ */
+    background: linear-gradient(to right, #d6f9ff 0%,#00ccf9 49%,#dbf4f9 100%); /* W3C */
+}
+
+h1 a {
+    color: #d7ceb2;
+    text-shadow: 1px 1px 0px #2c2e38, 2px 2px 0px #5c5f72;
+    font: 20px;
+    text-decoration: none;
+}
+
+h1 {
+    padding: 0px;
+    margin: 4px;
+    margin-top: 20px;
+}
+
+.stats {
+    padding: 0px;
+    margin: 0px;
+    color: gray;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid gray;
+}
+
+.gutter {
+    color: gray;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0 5px 0 5px;
+    cursor: pointer;
+}
+
+.file {
+    margin-top: 20px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    padding: 1px;
+    color: #141414;
+}
+
+.file td {
+    padding: 0 5px 0 5px;
+}
+
+.file th {
+    font-weight: normal;
+}
+
+.file th:hover {
+    cursor: pointer;
+}
+
+.file tr:not(.heap):hover {
+    background-color: rgba(100, 220, 255, 1);
+}
+
+.gutter.past_gutter {
+    /*border-right: 2px solid #696969;*/
+}
+
+.new {
+    background-color: rgba(0, 200, 10, 0.3);
+}
+
+
+.file tr.new .gutter.past_gutter {
+    color: rgba(0,0,0,0);
+}
+
+.file tr.removed .gutter.future_gutter {
+    color: rgba(0,0,0,0);
+}
+
+.removed {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.changed {
+    background-color: rgba(255, 255, 0, 0.4);
+}

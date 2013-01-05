@@ -1,0 +1,38 @@
+- content_for :css do
+  %link{href: 'http://fonts.googleapis.com/css?family=Federo', rel: 'stylesheet', type: 'text/css'}
+  = stylesheet_link_tag 'review_requests/show'
+
+- content_for :js do
+  = javascript_include_tag 'review_requests/show'
+
+.title All seeing eye
+
+%table.requests
+  - @request.files.each do |file|
+    %table.file{width: "100%", cellspacing: 0, cellpadding: 0, data: {fname: file['filename'], rev: file['sha']}}
+      %tr
+        %th.header{colspan: 4}
+          = image_tag file.mime_icon, width: 24, height: 24, align: 'center' if file.mime_icon
+          = link_to file['filename'], file['raw_url']
+        %th.header{colspan: 2}
+          %small.right= file['sha']
+          %p= file.stats
+
+      - file.diffs.each do |diff|
+        - diff.each_line do |l|
+          %tr{l.opts}
+            - if false # l.heap?
+              %td{colspan: 5}= l.past
+            - else
+              %td.past{width: "50%"}
+                %pre
+                  %code{data: {language: 'ruby'}}= l.past
+              - if false #l.change?
+                %th.gutter{colspan: 2}= l.new? ? l.future_number : l.past_number
+              - else
+                %th.gutter.past_gutter= l.past_number
+                %th.eye &nbsp;&nbsp;
+                %th.gutter.future_gutter= l.future_number
+              %td.future
+                %pre
+                  %code{data: {language: 'ruby'}}= l.future

@@ -33,8 +33,11 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'haml'
 
+gem 'octokit'
+
 group :development do
   gem 'haml-rails'
+  gem 'rb-readline'
 end
 
 group :test do

@@ -28,4 +28,14 @@ AllSeeingEye::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.assets.paths = [
+      'app/assets/images',
+      'app/assets/javascripts',
+      'app/assets/stylesheets',
+      'lib/assets/javascripts',
+      'lib/assets/stylesheets',
+      'vendor/assets/javascripts',
+      'vendor/assets/stylesheets']
+
 end
