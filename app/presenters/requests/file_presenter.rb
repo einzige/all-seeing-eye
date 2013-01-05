@@ -80,11 +80,19 @@ module Requests
       @changed ||= (split_diff and @changed)
     end
 
+    def mime_icon
+      case self['filename'].match(/\.(\w+)$/)[1]
+        when 'rb'
+          'mimes/rb.png'
+        else
+          nil
+      end
+    end
 
     # Returns diff statistics including number of changes
     # @return [String]
     def stats
-      "#{self[:status]}: #{self[:additions]} additions, #{self[:deletions]} deletions, #{self[:changes]} changes"
+      "<b>#{self[:status]}</b>: <span class='green'>#{self[:additions]}</span> additions, <span class='red'>#{self[:deletions]}</span> deletions, <span class='yellow'>#{self[:changes]}</span> changes".html_safe
     end
 
     def line_class(l)

@@ -70,7 +70,7 @@ module Requests
     # Returns diff statistics including number of changes
     # @return [String]
     def stats
-      "#{self[:status]}: #{self[:additions]} additions, #{self[:deletions]} deletions, #{self[:changes]} changes"
+      "<b>#{self[:status]}</b>: #{self[:additions]} additions, #{self[:deletions]} deletions, #{self[:changes]} changes".html_safe
     end
 
     def collection

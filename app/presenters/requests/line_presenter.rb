@@ -5,6 +5,18 @@ module Requests
       klass == :heap
     end
 
+    def change?
+      [:new, :removed].include?(klass)
+    end
+
+    def new?
+      klass == :new
+    end
+
+    def removed?
+      klass == :removed
+    end
+
     def source
       @source ||= diff.past[l]
     end
@@ -18,11 +30,11 @@ module Requests
     end
 
     def past_number
-      @past_number ||= diff.past_map[l].first + diff.offset - 1
+      @past_number ||= heap? ? '...' : diff.past_map[l].first + diff.offset - 1
     end
 
     def future_number
-      @future_number ||= diff.future_map[l].first + diff.offset - 1
+      @future_number ||= heap? ? '...' : diff.future_map[l].first + diff.offset - 1
     end
 
     def opts
