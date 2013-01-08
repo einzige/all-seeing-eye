@@ -19,20 +19,24 @@
           %p= file.stats
 
       - file.diffs.each do |diff|
-        - diff.each_line do |l|
-          %tr{l.opts}
-            - if false # l.heap?
-              %td{colspan: 5}= l.past
-            - else
-              %td.past{width: "50%"}
-                %pre
-                  %code{data: {language: 'ruby'}}= l.past
-              - if false #l.change?
-                %th.gutter{colspan: 2}= l.new? ? l.future_number : l.past_number
+        %tbody.tbody
+          - diff.each_line do |l|
+            %tr{l.opts}
+              - if false # l.heap?
+                %td{colspan: 5}= l.past
               - else
-                %th.gutter.past_gutter= l.past_number
-                %th.eye &nbsp;&nbsp;
-                %th.gutter.future_gutter= l.future_number
-              %td.future
-                %pre
-                  %code{data: {language: 'ruby'}}= l.future
+                %td.past{width: "50%"}
+                  %pre
+                    %code{data: {language: 'ruby'}}= l.past
+                - if false #l.change?
+                  %th.gutter{colspan: 2}= l.new? ? l.future_number : l.past_number
+                - else
+                  %th.gutter.past_gutter= l.past_number
+                  - if l.heap?
+                    %th.subheap
+                  - else
+                    %th.eye &nbsp;&nbsp;
+                  %th.gutter.future_gutter= l.future_number
+                %td.future
+                  %pre
+                    %code{data: {language: 'ruby'}}= l.future
