@@ -31,12 +31,12 @@
                 - if false #l.change?
                   %th.gutter{colspan: 2}= l.new? ? l.future_number : l.past_number
                 - else
-                  %th.gutter.past_gutter= l.past_number
+                  %th.gutter.past_gutter{width: 4}= l.past_number
                   - if l.heap?
                     %th.subheap
                   - else
-                    %th.eye &nbsp;&nbsp;
-                  %th.gutter.future_gutter= l.future_number
+                    %th.eye{width: 1} &nbsp;&nbsp;
+                  %th.gutter.future_gutter{width: 4}= l.future_number
                 %td.future
                   %pre
                     %code{data: {language: 'ruby'}}= l.future

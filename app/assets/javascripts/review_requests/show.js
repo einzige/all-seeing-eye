@@ -14,7 +14,6 @@
 
 $(document).ready(function() {
 
-
     $('.file .tbody').each(function() {
         var round_column = $(this).find('th.eye:first');
         round_column.css("border-top-right-radius", "10px");
@@ -43,16 +42,20 @@ $(document).ready(function() {
     $('.file th').mousedown(function(e) {
         pressed = $(this).parent('tr');
         pressed.addClass('commented');
-        $('.file tr').bind('selectstart', function(event) { event.preventDefault(); });
+        $('.file tr').bind('selectstart', function(event) { event.preventDefault(); return false; });
+
+        $('.file').addClass('unselectable');
+
         $('.file th').bind('mouseover', function() {
             $(this).parent('tr').addClass('commented');
         });
         e.stopPropagation();
-
     });
 
     $('.file th').mouseup(function(e) {
         released = $(this).parent('tr');
+
+        $('.file').removeClass('unselectable');
 
         $('.file tr').unbind('selectstart');
         $('.file th').unbind('mouseover');
@@ -75,6 +78,4 @@ $(document).ready(function() {
         released = undefined;
         e.stopPropagation();
     });
-
-
 });

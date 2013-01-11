@@ -137,6 +137,12 @@ small {
     text-align: center;
 }
 
+.unselectable {
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 th.eye {
     background: #d6f9ff; /* Old browsers */
     background: -moz-linear-gradient(left, #d6f9ff 0%, #9ee8fa 49%, #dbf4f9 100%); /* FF3.6+ */
@@ -208,7 +214,7 @@ h1 {
     cursor: pointer;
 }
 
-.file tr:not(.heap):hover {
+.file tr:not(.heap):hover td {
     background-color: rgba(100, 220, 255, 1);
 }
 
@@ -227,6 +233,42 @@ h1 {
 
 .file tr.removed .gutter.future_gutter {
     color: rgba(0,0,0,0);
+}
+
+.file tr:hover:not(.heap) .gutter {
+    color: white;
+}
+
+.file tr:hover:not(.heap) .gutter.future_gutter {
+    background-image: linear-gradient(left , rgb(65,154,199) 32%, rgb(111,194,250) 100%);
+    background-image: -o-linear-gradient(left , rgb(65,154,199) 32%, rgb(111,194,250) 100%);
+    background-image: -moz-linear-gradient(left , rgb(65,154,199) 32%, rgb(111,194,250) 100%);
+    background-image: -webkit-linear-gradient(left , rgb(65,154,199) 32%, rgb(111,194,250) 100%);
+    background-image: -ms-linear-gradient(left , rgb(65,154,199) 32%, rgb(111,194,250) 100%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        right bottom,
+        color-stop(0.32, rgb(65,154,199)),
+        color-stop(1, rgb(111,194,250))
+    );
+}
+
+.file tr:hover:not(.heap) .gutter.past_gutter {
+    background-image: linear-gradient(left , rgb(65,154,199) 100%, rgb(111,194,250) 32%);
+    background-image: -o-linear-gradient(left , rgb(65,154,199) 100%, rgb(111,194,250) 32%);
+    background-image: -moz-linear-gradient(left , rgb(65,154,199) 100%, rgb(111,194,250) 32%);
+    background-image: -webkit-linear-gradient(left , rgb(65,154,199) 100%, rgb(111,194,250) 32%);
+    background-image: -ms-linear-gradient(left , rgb(65,154,199) 100%, rgb(111,194,250) 32%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        right bottom,
+        color-stop(1, rgb(65,154,199)),
+        color-stop(0.32, rgb(111,194,250))
+    );
 }
 
 .removed {
