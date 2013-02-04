@@ -2,9 +2,13 @@ AllSeeingEye::Application.routes.draw do
 
   resources :review_requests
   resources :ads, only: :index
+
   resource :home, only: :show
   resources :pages, only: :show
-  resources :categories, only: :index
+
+  resources :categories, only: :index do
+    resources :ads, only: :index
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

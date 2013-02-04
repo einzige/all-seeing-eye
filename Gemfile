@@ -32,6 +32,8 @@ gem 'factory_girl'
 gem 'factory_girl_rails'
 gem 'faker'
 gem 'haml'
+gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'will_paginate_mongoid'
 
 gem 'octokit'
 

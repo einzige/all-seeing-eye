@@ -1,45 +1,55 @@
-class Category < Struct.new(:level)
+class Category
+  include Mongoid::Document
+  include Mongoid::Tree
 
-  attr_accessor :name, :leaf
+  field :name
+  field :slug
+
+  has_many :ads
+
+  before_save :update_slug
 
   def as_json *opts
-    {name: name, id: id, items: items, slug: name.parameterize, leaf: leaf?}.as_json(*opts)
+    {name: name, id: id, items: children, slug: slug, leaf: leaf?}.as_json(*opts)
   end
 
-  def items
-    if leaf?
+
+  def build_children
+    if depth > 1
       []
     else
-      10.times.map do
-        self.class.new(level + 1).as_json
+      5.times do
+        self.class.factory(parent: self)
       end
     end
   end
 
-  def self.tree
+  def self.factory(opts = {})
+    node = self.create(opts.merge(name: Faker::Company.name))
+    node.build_children
+    node
+  end
+
+  def self.build_tree
     items = []
 
-    rtest = self.new(1)
-    rtest.name = 'suka'
-    rtest.leaf = true
-    items << rtest.as_json
+    items << self.create(name: 'One leaf')
 
     10.times do
-      items << self.new(1).as_json
+      items << self.factory
     end
 
     items
   end
 
-  def leaf?
-    @leaf || level > 2
+  def self.tree
+    self.roots.as_json
   end
 
-  def id
-    rand(100000)
-  end
+  private
 
-  def name
-    @name ||= Faker::Company.name
+  def update_slug
+    self[:slug] = name.parameterize
+    true
   end
 end
