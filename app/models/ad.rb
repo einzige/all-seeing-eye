@@ -14,7 +14,7 @@ class Ad
   end
 
   def as_json(*params)
-    {text: text, tel: tel, date: date.to_s(:short), ordering: ordering}.as_json(*params)
+    {id: id, text: text, tel: tel, date: date.to_s(:short), ordering: ordering}.as_json(*params)
   end
 
   def self.def_tel

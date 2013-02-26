@@ -8,6 +8,11 @@ class AdsController < ApplicationController
                      ads:         @category.ads.paginate(page: params[:page], per_page: params[:limit].to_i))
   end
 
+  def search
+    ads = Ad.any_of({ :text => Regexp.new(".*"+params[:q]+".*") })
+    render js: jsonp(total_count: ads.count, ads: ads.paginate(page: params[:page], per_page: params[:limit].to_i))
+  end
+
   private
 
   def load_category

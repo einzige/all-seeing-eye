@@ -1,7 +1,11 @@
 AllSeeingEye::Application.routes.draw do
 
   resources :review_requests
-  resources :ads, only: :index
+  resources :ads, only: :index do
+    collection do
+      get :search
+    end
+  end
 
   resource :home, only: :show
   resources :pages, only: :show
